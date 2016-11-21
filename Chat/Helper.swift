@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseAuth
 import UIKit
+import FirebaseDatabase
 
 class Helper{
 
@@ -25,6 +26,10 @@ class Helper{
     FIRAuth.auth()?.signInAnonymouslyWithCompletion({ (anonymousUser:FIRUser?, error:NSError?) in
     if error == nil{
     print("no error \(anonymousUser!.uid)")
+        
+    let newUser = FIRDatabase.database().reference().child("users").child(anonymousUser!.uid)
+        newUser.setValue(["displayname" : "Anonymous","id": "\(anonymousUser!.uid)","profileUrl":""])
+    
     
     // create a main storyboard instance
     let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		40D5A6317C901D3446EAE3C9 /* Pods_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C8D6FEEC24D860ABCC4F18C /* Pods_ChatTests.framework */; };
+		73251BA71DE2BAC700C13458 /* profileImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 73251BA61DE2BAC700C13458 /* profileImage.png */; };
 		736025851DD118C9009E38D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736025841DD118C9009E38D6 /* AppDelegate.swift */; };
 		7360258A1DD118C9009E38D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 736025881DD118C9009E38D6 /* Main.storyboard */; };
 		7360258C1DD118C9009E38D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7360258B1DD118C9009E38D6 /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		2F7A051B06FBC661A07ACC42 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Chat/Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
 		4DF7B2E77D71BE7A575522BD /* Pods-ChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatUITests/Pods-ChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C9980FF2E9142050F758434 /* Pods-ChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatUITests/Pods-ChatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		73251BA61DE2BAC700C13458 /* profileImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileImage.png; sourceTree = "<group>"; };
 		736025811DD118C9009E38D6 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		736025841DD118C9009E38D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		736025891DD118C9009E38D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				736025B81DD14400009E38D6 /* GoogleService-Info.plist */,
 				7360258D1DD118C9009E38D6 /* LaunchScreen.storyboard */,
 				736025901DD118C9009E38D6 /* Info.plist */,
+				73251BA61DE2BAC700C13458 /* profileImage.png */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				736025B91DD14400009E38D6 /* GoogleService-Info.plist in Resources */,
 				7360258C1DD118C9009E38D6 /* Assets.xcassets in Resources */,
 				7360258A1DD118C9009E38D6 /* Main.storyboard in Resources */,
+				73251BA71DE2BAC700C13458 /* profileImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

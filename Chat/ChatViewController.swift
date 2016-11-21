@@ -18,15 +18,26 @@ class ChatViewController: JSQMessagesViewController {
 
     var messages = [JSQMessage]()
     var messageRef = FIRDatabase.database().reference().child("messages")
+    var avatarDict = [String: JSQMessagesAvatarImage]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let currentUser = FIRAuth.auth()?.currentUser
-        print(currentUser?.uid)
+        //for username user photo display
+        if let currentUser = FIRAuth.auth()?.currentUser{
         
-        self.senderId = currentUser!.uid
-        self.senderDisplayName = "0"
+            self.senderDisplayName = "Anonymous"
+            self.senderId = currentUser.uid
+            self.senderDisplayName = "0"
+        
+        }
+        
+       // let currentUser = FIRAuth.auth()?.currentUser
+        //print(currentUser?.uid)
+        
+//        self.senderId = currentUser!.uid
+//        self.senderDisplayName = "0"
         // Do any additional setup after loading the view.
         
 //        let rootRef = FIRDatabase.database().reference()
@@ -45,9 +56,49 @@ class ChatViewController: JSQMessagesViewController {
 //            if let dict = snapShot.value as? NSDictionary{
 //            print(dict)}
 //        }
+        
+        
+        //user info retrive
+//        observeUser()
+        
+        //message retrive
         observeMessages()
         
     }
+    
+    func observeUser(id: String){
+    
+        FIRDatabase.database().reference().child("users").child(id).observeEventType(.Value, withBlock: {snapShot in
+        //print(snapShot.value)
+            if let dict = snapShot.value as? [String: AnyObject]
+            {
+            
+                let avataUrl = dict["profileUrl"] as! String
+                self.setupAvatar(avataUrl, messageId: id)
+                
+            }
+        })
+        
+    }
+    
+    func setupAvatar(url: String, messageId: String)
+    {
+        if url != ""
+        {
+            let fileUrl = NSURL(string: url)
+            let data = NSData(contentsOfURL: fileUrl!)
+            let image = UIImage(data: data!)
+            let userImg = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: 30)
+            avatarDict[messageId] = userImg
+        }
+        else
+        {
+            avatarDict[messageId] = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "profileImage"), diameter:30 )
+
+        }
+        collectionView?.reloadData()
+    }
+    
     func observeMessages(){
         messageRef.observeEventType(.ChildAdded, withBlock: {snapShot in
             if let dict = snapShot.value as? [String: AnyObject]{
@@ -59,6 +110,8 @@ class ChatViewController: JSQMessagesViewController {
                 let senderName = dict["senderName"] as! String
                // let senderName = String(senderNameNumber)
                 print(senderName)
+                
+                self.observeUser(senderId)
                 
                 
                 if mediaType == "TEXT" {
@@ -73,18 +126,27 @@ class ChatViewController: JSQMessagesViewController {
                     let photo = JSQPhotoMediaItem(image: picture)
                     self.messages.append(JSQMessage(senderId: senderId, displayName: senderName, media: photo))
                     
-                 //   if self.senderId == senderId {
+                    if self.senderId == senderId {
                         photo.appliesMediaViewMaskAsOutgoing = true
-                   // }
-                  //  else {
-                 //       photo.appliesMediaViewMaskAsOutgoing = false
-                 //   }
+                    }
+                    else {
+                        photo.appliesMediaViewMaskAsOutgoing = false
+                    }
                     
                 }else if mediaType == "VIDEO" {
                     let fileUrl = dict["fileUrl"] as! String
                     let video = NSURL(string: fileUrl)
                     let movie = JSQVideoMediaItem(fileURL: video, isReadyToPlay: true)
+                    
                     self.messages.append(JSQMessage(senderId: senderId, displayName: senderName, media: movie))
+                    
+                    if self.senderId == senderId {
+                        movie.appliesMediaViewMaskAsOutgoing = true
+                    }
+                    else {
+                        movie.appliesMediaViewMaskAsOutgoing = false
+                    }
+                    
 
                     
                 }
@@ -170,7 +232,13 @@ class ChatViewController: JSQMessagesViewController {
       }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        
+        let message = messages[indexPath.item]
+        
+        
+        
+//        return JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "profileImage"), diameter:30 )
+        return avatarDict[message.senderId]
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
